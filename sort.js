@@ -12,17 +12,26 @@ const returnSorted = (type, array) => {
   }
 };
 
-const selectionSort = (arr) => {
-  for (let i = 0; i < arr.length; i++) {
-    let minIndex = i;
-    for (let j = i; j < arr.length; j++) {
-      if (arr[j] < arr[minIndex]) minIndex = j;
-    }
-    if (minIndex !== i) {
-      [arr[i], arr[minIndex]] = [arr[minIndex], arr[i]];
-    }
 
-    console.log(arr);
+
+const selectionSort = (arr) => {
+
+
+  let curIndex = 0;
+  let minIndex = 0;
+  const len = arr.length;
+
+  while (curIndex < len - 1) {
+    minIndex = curIndex
+    for (let j = curIndex; j < len; j++) {
+      if (arr[j] < arr[minIndex]) {
+        minIndex = j;
+      }
+    }
+    if (minIndex !== curIndex) {
+      [arr[curIndex], arr[minIndex]] = [arr[minIndex], arr[curIndex]];
+    }
+    curIndex++;
   }
   return arr;
 };

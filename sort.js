@@ -9,20 +9,19 @@ const returnSorted = (type, array) => {
     case "insertion": {
       return insertionSort(array);
     }
+    default: {
+      console.log("Wrong Input");
+    }
   }
 };
 
-
-
 const selectionSort = (arr) => {
-
-
   let curIndex = 0;
   let minIndex = 0;
   const len = arr.length;
 
   while (curIndex < len - 1) {
-    minIndex = curIndex
+    minIndex = curIndex;
     for (let j = curIndex; j < len; j++) {
       if (arr[j] < arr[minIndex]) {
         minIndex = j;
@@ -36,7 +35,31 @@ const selectionSort = (arr) => {
   return arr;
 };
 
-const bubbleSort = (array) => {};
-const insertionSort = (array) => {};
+const bubbleSort = (array) => {
+  let i, j;
+  const len = array.length;
 
-console.log(returnSorted("selection", [3, 1, 4, 5, 7, 6, 8]));
+  for (i = 0; i < len; i++) {
+    for (j = i; j < len; j++) {
+      if (array[i] > array[j]) {
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+    }
+  }
+  return array;
+};
+const insertionSort = (array) => {
+  let i, j;
+  const len = array.length;
+
+  for (i = 0; i < len; i++) {
+    j = i;
+    while (j > 0 && array[j - 1] > array[j]) {
+      [array[j - 1], array[j]] = [array[j], array[j - 1]];
+      j--;
+    }
+  }
+  return array;
+};
+
+console.log(returnSorted("insertion", [3, 1, 4, 5, 7, 6, 8]));

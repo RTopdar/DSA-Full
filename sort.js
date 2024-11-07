@@ -1,3 +1,5 @@
+const { rightShift } = require("./shift");
+
 const returnSorted = (type, array) => {
   switch (type) {
     case "bubble": {
@@ -8,6 +10,13 @@ const returnSorted = (type, array) => {
     }
     case "insertion": {
       return insertionSort(array);
+    }
+    case "merge": {
+      return merge(array);
+    }
+
+    case "quick": {
+      return quick(array);
     }
     default: {
       console.log("Wrong Input");
@@ -48,6 +57,7 @@ const bubbleSort = (array) => {
   }
   return array;
 };
+
 const insertionSort = (array) => {
   let i, j;
   const len = array.length;
@@ -62,4 +72,61 @@ const insertionSort = (array) => {
   return array;
 };
 
-console.log(returnSorted("insertion", [3, 1, 4, 5, 7, 6, 8]));
+const merge = (array) => {
+  const mergeSort = (arr) => {
+    if (arr.length <= 1) return arr;
+
+    const mid = Math.floor(arr.length / 2);
+
+    let left = mergeSort(arr.slice(0, mid));
+
+    let right = mergeSort(arr.slice(mid));
+
+    return join(left, right);
+  };
+
+  function join(left, right) {
+    let sorted = [];
+
+    while (left.length && right.length) {
+      if (left[0] < right[0]) {
+        sorted.push(left.shift());
+      } else {
+        sorted.push(right.shift());
+      }
+    }
+    return [...sorted, ...left, ...right];
+  }
+
+  return mergeSort(array);
+};
+
+const quick = (array) => {
+  // Identify the pivot element (last element in this solutuion)
+  // traverse from first to second last element
+  // Everything smaller than the pivot to the left array
+  //Everyting greater than the pivot to the right array
+  //Repeatedly concatenate the left array, pivot and right array till one sorted array remains
+  const quickSort = (arr) => {
+    if (arr.length && arr.length <= 1) return arr;
+    const pivot = arr[arr.length - 1];
+    const left = [];
+    const right = [];
+
+    for (let i = 0; i < arr.length - 1; i++) {
+      if (arr[i] < pivot) {
+        left.push(arr[i]);
+      } else if (arr[i] > pivot) {
+        right.push(arr[i]);
+      }
+    }
+    // console.log(left, pivot, right);     Smaller elements are pushed to the left array, larger elements are pushed to the larger array
+
+    // Now we quicksort the left and right arrays, and then return the entire array
+
+    return [...quickSort(left), pivot, ...quickSort(right)]; // We are spreading the arrays as each recursion of quick sort will return another array
+  };
+  return quickSort(array);
+};
+
+console.log(returnSorted("quick", [9, 3, 7, 5, 6, 4, 1, 8, 2]));
